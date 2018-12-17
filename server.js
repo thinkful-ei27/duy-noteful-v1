@@ -18,8 +18,13 @@ app.listen(8080, function(){
 
 app.get('/api/notes', (req, res) =>{
     const searchTerm = req.query.searchTerm;
+    if (searchTerm){
     const results = data.filter(item =>item.title.includes(searchTerm));
-  res.json(results);
+    res.json(results);
+    else {
+        res.json(data);
+    }
+}
 });
 
 app.get('/api/notes/:id', (req, res)=>{
