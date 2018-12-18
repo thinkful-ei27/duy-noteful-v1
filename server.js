@@ -8,6 +8,11 @@ const express = require('express');
 
 const data = require('./db/notes');
 
+// Simple In-Memory Database
+const data = require('./db/notes');
+const simDB = require('./db/simDB');  // <<== add this
+const notes = simDB.initialize(data); // <<== and this
+
 const app = express();
 
 const logger = require('./middleware/logger');
@@ -21,15 +26,15 @@ app.listen(PORT, function(){
   console.error(err);
 });
 
-app.get('/api/notes', (req, res) =>{
-  const searchTerm = req.query.searchTerm;
-  if (searchTerm){
-    let results = data.filter(item =>item.title.includes(searchTerm));
-    res.json(results);
-  }
-  else {
-    res.json(data);
-  }
+app.get('/api/notes', (req, res, next) => {
+  const { searchTerm } = req.query;
+
+  notes.filter(searchTerm, (err, list) => {
+    if (err) {
+      return next(err); // goes to error handler
+    }
+    res.json(list); // responds with filtered array
+  });
 });
 
 app.get('/api/notes/:id', (req, res)=>{
