@@ -6,7 +6,7 @@ console.log('Hello Noteful!');
 // INSERT EXPRESS APP CODE HERE...
 const express = require('express');
 
-const data = require('./db/notes');
+//const data = require('./db/notes');
 
 // Simple In-Memory Database
 const data = require('./db/notes');
@@ -37,6 +37,7 @@ app.get('/api/notes', (req, res, next) => {
   });
 });
 
+
 app.get('/api/notes/:id', (req, res)=>{
   const id = req.params.id;
   let note = data.find(item =>item.id === Number(id));
@@ -49,6 +50,7 @@ app.use(function (req, res, next) {
   err.status = 404;
   res.status(404).json({ message: 'Not Found' });
 });
+
 
 app.use(function (err, req, res, next) {
   res.status(err.status || 500);

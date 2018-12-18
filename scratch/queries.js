@@ -38,3 +38,20 @@ notes.update(1005, updateObj, (err, item) => {
     console.log('not found');
   }
 });
+
+const newItem ={
+    title: 'doggy',
+    content: 'woof woof'
+};
+
+notes.create(newItem, (err, item) => {
+    if (err) {
+      console.error(err);
+    }
+    if (item) {
+      console.log(item);
+    } else {
+      console.log('not found');
+    }
+  }); 
+
