@@ -18,7 +18,15 @@ const app = express();
 const logger = require('./middleware/logger');
 
 const { PORT } = require('./config');
+
 app.use(logger);
+
+// Create a static webserver
+app.use(express.static('public'));
+
+// Parse request body
+app.use(express.json());
+
 
 app.listen(PORT, function(){
   console.info(`Server listening on ${this.address().port}`);
